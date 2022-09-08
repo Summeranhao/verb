@@ -50,7 +50,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/user/edit")
+    @PostMapping("/edit")
     @ResponseBody
     public String editUser(User user){
         userService.editUser( user);
@@ -58,7 +58,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/user/add")
+    @PostMapping("/add")
     @ResponseBody
     public String addUser(User user){
         userService.addUser( user);
