@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
- * 全局一场处理
+ * 全局异常处理
  */
 @ControllerAdvice
 public class GlobalExceptionHandle {
@@ -15,7 +15,7 @@ public class GlobalExceptionHandle {
     public BaseResponse errorHandle(Exception e){
         e.printStackTrace();
 
-        return BaseResponse.faild("失败");
+        return BaseResponse.faild("系统异常");
     }
 
 }
