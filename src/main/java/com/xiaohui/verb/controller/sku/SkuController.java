@@ -1,6 +1,5 @@
 package com.xiaohui.verb.controller.sku;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.Sku;
 import com.xiaohui.verb.service.sku.SkuService;

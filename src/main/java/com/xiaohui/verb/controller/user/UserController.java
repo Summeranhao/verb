@@ -1,6 +1,5 @@
 package com.xiaohui.verb.controller.user;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.User;
 import com.xiaohui.verb.service.user.UserService;
@@ -29,6 +28,7 @@ public class UserController {
     @GetMapping ("/queryAll")
     @ResponseBody
     public BaseResponse getUserList(){
+        int i=1/0;
         List<User> users =userService.queryUser(null);
         return BaseResponse.ok(users);
     }
