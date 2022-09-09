@@ -1,6 +1,7 @@
 package com.xiaohui.verb.controller.sku;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.Sku;
 import com.xiaohui.verb.service.sku.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,50 +18,50 @@ public class SkuController {
 
     // 多个查询(分页）
     @GetMapping("/selectAllPageQuery")
-    public IPage<Sku> selectAllPageQuery(@RequestParam("skuName") String skuName, @RequestParam("pageNum") int pageNum,
+    public BaseResponse selectAllPageQuery(@RequestParam("skuName") String skuName, @RequestParam("pageNum") int pageNum,
                                          @RequestParam("pageSize") int pageSize) {
-        return skuService.selectAllPageQuery(skuName,pageNum,pageSize);
+        return BaseResponse.ok(skuService.selectAllPageQuery(skuName,pageNum,pageSize));
 
     }
 
 
     @GetMapping ("/queryAll")
     @ResponseBody
-    public String getSkuList(){
+    public BaseResponse getSkuList(){
         List<Sku> skus =skuService.querySku(null);
-        return skus.toString();
+        return BaseResponse.ok(skus);
     }
 
     @GetMapping("/query")
     @ResponseBody
-    public String getSku(String skuName){
+    public BaseResponse getSku(String skuName){
 
         Sku sku=new Sku();
         sku.setSkuName(skuName);
         List<Sku> skus =skuService.querySku(sku);
-        return skus.toString();
+        return BaseResponse.ok(skus);
     }
 
     @PostMapping("/del")
     @ResponseBody
-    public String deleteSku(Integer id){
+    public BaseResponse deleteSku(Integer id){
         skuService.deleteSku( id);
-        return "删除成功！";
+        return BaseResponse.ok(null);
     }
 
 
     @PostMapping("/edit")
     @ResponseBody
-    public String editSku(Sku sku){
+    public BaseResponse editSku(Sku sku){
         skuService.editSku( sku);
-        return "编辑成功！";
+        return BaseResponse.ok(null);
     }
 
 
     @PostMapping("/add")
     @ResponseBody
-    public String addSku(Sku sku){
+    public BaseResponse addSku(Sku sku){
         skuService.addSku( sku);
-        return "新增成功！";
+        return BaseResponse.ok(null);
     }
 }

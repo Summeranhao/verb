@@ -1,6 +1,8 @@
 package com.xiaohui.verb.controller.order;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.Order;
 import com.xiaohui.verb.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,51 +20,51 @@ public class OrderController {
 
     // 多个查询(分页）
     @GetMapping("/selectAllPageQuery")
-    public IPage<Order> selectAllPageQuery(@RequestParam("orderCode") String skuName, @RequestParam("pageNum") int pageNum,
-                                         @RequestParam("pageSize") int pageSize) {
-        return orderService.selectAllPageQuery(skuName,pageNum,pageSize);
+    public BaseResponse selectAllPageQuery(@RequestParam("orderCode") String skuName, @RequestParam("pageNum") int pageNum,
+                                               @RequestParam("pageSize") int pageSize) {
+        return BaseResponse.ok(orderService.selectAllPageQuery(skuName,pageNum,pageSize));
 
     }
 
 
     @GetMapping ("/queryAll")
     @ResponseBody
-    public String getOrderList(){
+    public BaseResponse getOrderList(){
         List<Order> skus =orderService.queryOrder(null);
-        return skus.toString();
+        return BaseResponse.ok(skus);
     }
 
     @GetMapping("/query")
     @ResponseBody
-    public String getOrder(String userName){
+    public BaseResponse getOrder(String userName){
 
         Order order=new Order();
         order.setUserName(userName);
         List<Order> orders =orderService.queryOrder(order);
-        return orders.toString();
+        return BaseResponse.ok(orders);
     }
 
     @PostMapping("/del")
     @ResponseBody
-    public String deleteOrder(Integer id){
+    public BaseResponse deleteOrder(Integer id){
         orderService.deleteOrder( id);
-        return "删除成功！";
+        return BaseResponse.ok(null);
     }
 
 
     @PostMapping("/edit")
     @ResponseBody
-    public String editOrder(Order order){
+    public BaseResponse editOrder(Order order){
         orderService.editOrder( order);
-        return "编辑成功！";
+        return BaseResponse.ok(null);
     }
 
 
     @PostMapping("/add")
     @ResponseBody
-    public String addOrder(Order order){
+    public BaseResponse addOrder(Order order){
         orderService.addOrder( order);
-        return "新增成功！";
+        return BaseResponse.ok(null);
     }
 
 }
