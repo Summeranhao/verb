@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.User;
-import com.xiaohui.verb.interceptor.SessionInterceptor;
 import com.xiaohui.verb.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SessionInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserMapper userMapper;
