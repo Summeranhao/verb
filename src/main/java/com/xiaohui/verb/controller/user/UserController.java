@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -15,6 +16,16 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 登录
+     * @param user 参数封装
+     * @return Result
+     */
+    @PostMapping(value = "/login")
+    public BaseResponse login(User user,HttpSession session){
+        return userService.login(user, session);
+    }
 
     // 多个查询(分页）
     @GetMapping("/selectAllPageQuery")
