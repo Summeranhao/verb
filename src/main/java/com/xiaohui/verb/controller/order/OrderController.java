@@ -60,7 +60,7 @@ public class OrderController {
 
     @PostMapping("/add")
     @ResponseBody
-    public BaseResponse addOrder(Order order){
+    public BaseResponse addOrder(Order order){// TODO: 2022/9/16 基于注解的参数校验
         orderService.addOrder( order);
         return BaseResponse.ok(null);
     }

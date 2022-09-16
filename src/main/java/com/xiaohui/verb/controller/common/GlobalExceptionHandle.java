@@ -15,7 +15,7 @@ public class GlobalExceptionHandle {
     public BaseResponse errorHandle(Exception e){
         e.printStackTrace();
 
-        return BaseResponse.faild("系统异常");
+        return BaseResponse.failed("系统异常");
     }
 
 }

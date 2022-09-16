@@ -17,7 +17,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionInterceptor.class);
 
     @Value("${verb.auth.control.formula}")
-    private boolean authRuller;
+    private boolean authRuller;// TODO: 2022/9/16 这里用boolean接表达式肯定不行，另外这些拼写错误要注意
 
     /**
      * 实现一个权限控制方案：
@@ -58,7 +58,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         //继续 运行
         return true;
     }
-
+    // TODO: 2022/9/16 这个方法里的逻辑应该是： 1、判断url是否需要校验权限，2、如果需要，执行表达式，3、判断表达式执行结果
     private boolean authControl(HttpServletResponse response, User user,String url) {
 
         //取配置文件里配置的权限表达式

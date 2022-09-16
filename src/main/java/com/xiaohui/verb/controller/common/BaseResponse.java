@@ -42,7 +42,7 @@ public  class BaseResponse {
     }
 
     //    失败返回
-    public static BaseResponse faild(Object data){
+    public static BaseResponse failed(Object data){
         return new BaseResponse(500,false,data);
     }
 
