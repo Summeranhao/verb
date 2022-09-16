@@ -8,6 +8,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @describe Session拦截器
@@ -16,8 +20,12 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionInterceptor.class);
 
-    @Value("${verb.auth.control.formula}")
-    private boolean authRuller;// TODO: 2022/9/16 这里用boolean接表达式肯定不行，另外这些拼写错误要注意
+    @Value("${auth.control.formula}")
+    private String authFormula;
+
+    @Value("${auth.control.list}")
+    private String urlList;
+
 
     /**
      * 实现一个权限控制方案：
@@ -37,17 +45,17 @@ public class SessionInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         //判断非空
         if (uri != null) {
-            //todo 判断是否的登陆的首页  登陆则通过
+            User user = (User) request.getSession().getAttribute("user");
+            //判断是否的登陆的首页  登陆则通过
             //String类型有一个方法：contains（）,该方法是判断字符串中是否有子字符串。如果有则返回true，如果没有则返回false。
             if (uri.contains("/user/login")) {
                 return true;
-
             }
-            //todo 判断是否已经登录    此处的("user") 是登陆中获取的，判断是否登陆
-            User user = (User) request.getSession().getAttribute("user");
+
+            //判断是否已经登录    此处的("user") 是登陆中获取的，判断是否登陆
             if (user == null) {
                 //重定向页面 如果没有登录就跳转到登录页面   page/login是我的登陆页面
-                response.sendRedirect(request.getContextPath() + "/page/login");
+                response.sendRedirect(request.getContextPath() + "/login");
                 //停止 运行
                 return false;
             }else{
@@ -58,19 +66,38 @@ public class SessionInterceptor implements HandlerInterceptor {
         //继续 运行
         return true;
     }
-    // TODO: 2022/9/16 这个方法里的逻辑应该是： 1、判断url是否需要校验权限，2、如果需要，执行表达式，3、判断表达式执行结果
+
+
+    //这个方法里的逻辑应该是： 1、判断url是否需要校验权限，2、如果需要，执行表达式，3、判断表达式执行结果
     private boolean authControl(HttpServletResponse response, User user,String url) {
 
+        //判断是否需要控制权限，如果不需要，则直接通过
+        if(urlList!=null){
+            String[] urls = urlList.split(",");
+            List<String> strings = Arrays.asList(urls);
+            if(strings.contains(url)){
+                LOGGER.info("不需要控制权限："+url);
+                return true;
+            }
+        }
+
         //取配置文件里配置的权限表达式
-        LOGGER.info("配置文件里的权限表达式为："+authRuller);
+        //使用用户id，匹配配置的正则表达式
+        Pattern p = Pattern.compile(authFormula);
+        Matcher m = p.matcher(5+"");
+        boolean authRuler=m.find();
+
+        LOGGER.info("配置文件里的权限表达式为："+authFormula);
+        LOGGER.info("校验正则表达式："+authRuler);
 
 
-        if(authRuller && (url.contains("/order/add") || url.contains("/sku/add"))){
+
+        if(authRuler && (url.contains("/order/add") || url.contains("/sku/add"))){
             response.setStatus(403);
             return false;
         }
 
-        if(!authRuller && (url.contains("/order/edit") || url.contains("/sku/edit"))){
+        if(!authRuler && (url.contains("/order/edit") || url.contains("/sku/edit"))){
             response.setStatus(403);
             return false;
         }

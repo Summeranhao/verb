@@ -1,0 +1,24 @@
+#我的是MySql8.0
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.43.202.238:5306/fxgmall
+    username: house_service
+    password: house_123456
+  main:
+    allow-circular-references: true
+
+server:
+  port: 8081
+
+mybatis:
+  typeAliasesPackage: com.xiaohui.verb.domain
+  mapperLocations: classpath:mapper/*Mapper.xml
+
+
+#需要控制权限的请求
+auth:
+  control:
+    list: '/order/add,/order/edit,/order/del,/sku/add,/sku/edit,/sku/del,/order/queryAll'
+    formula: '([1-9][0-9]*)?[05]'
+

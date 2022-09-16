@@ -4,8 +4,11 @@ import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.Order;
 import com.xiaohui.verb.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -44,7 +47,7 @@ public class OrderController {
 
     @PostMapping("/del")
     @ResponseBody
-    public BaseResponse deleteOrder(Integer id){
+    public BaseResponse deleteOrder( Integer id){
         orderService.deleteOrder( id);
         return BaseResponse.ok(null);
     }
@@ -52,7 +55,7 @@ public class OrderController {
 
     @PostMapping("/edit")
     @ResponseBody
-    public BaseResponse editOrder(Order order){
+    public BaseResponse editOrder(@RequestBody @Valid Order order){
         orderService.editOrder( order);
         return BaseResponse.ok(null);
     }
@@ -60,9 +63,11 @@ public class OrderController {
 
     @PostMapping("/add")
     @ResponseBody
-    public BaseResponse addOrder(Order order){// TODO: 2022/9/16 基于注解的参数校验
+    public BaseResponse addOrder(@RequestBody @Valid Order order){// TODO: 2022/9/16 基于注解的参数校验
         orderService.addOrder( order);
         return BaseResponse.ok(null);
     }
+
+
 
 }

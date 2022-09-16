@@ -4,6 +4,7 @@ import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.User;
 import com.xiaohui.verb.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +18,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+
+
     /**
      * 登录
      * @param user 参数封装
      * @return Result
      */
-    @PostMapping(value = "/login")
+    @GetMapping(value = "/login")
     public BaseResponse login(User user,HttpSession session){
         return userService.login(user, session);
     }
@@ -39,7 +43,7 @@ public class UserController {
     @GetMapping ("/queryAll")
     @ResponseBody
     public BaseResponse getUserList(){
-        int i=1/0;
+
         List<User> users =userService.queryUser(null);
         return BaseResponse.ok(users);
     }
