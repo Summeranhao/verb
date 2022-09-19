@@ -1,5 +1,6 @@
 package com.xiaohui.verb.controller.user;
 
+import com.xiaohui.verb.aspect.RequiredLog;
 import com.xiaohui.verb.controller.common.BaseResponse;
 import com.xiaohui.verb.domain.User;
 import com.xiaohui.verb.service.user.UserService;
@@ -27,6 +28,7 @@ public class UserController {
      * @return Result
      */
     @GetMapping(value = "/login")
+    @RequiredLog("登录")
     public BaseResponse login(User user,HttpSession session){
         return userService.login(user, session);
     }
@@ -39,9 +41,9 @@ public class UserController {
 
     }
 
-
     @GetMapping ("/queryAll")
     @ResponseBody
+    @RequiredLog("用户列表查询")
     public BaseResponse getUserList(){
 
         List<User> users =userService.queryUser(null);
